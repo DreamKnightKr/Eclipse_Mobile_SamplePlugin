@@ -51,14 +51,14 @@ public class IndicatorPlugin {
     }
 	
 	
-	public void ShowProgressIndicator(int bShow)
+	public void ShowProgressIndicator(boolean bShow)
  	{	    
- 	   if(1 == bShow)
+ 	   if(true == bShow)
  	   {
  	      Message msg = dialogHandlerShow.obtainMessage();
  	      dialogHandlerShow.sendMessage(msg);
  	   }
- 	   else if(0 == bShow)
+ 	   else if(false == bShow)
  	   {
  	      Message msg = dialogHandlerClose.obtainMessage();
  	      dialogHandlerClose.sendMessage(msg);
