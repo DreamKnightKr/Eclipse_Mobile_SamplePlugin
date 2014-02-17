@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Handler;
+import android.os.HandlerThread;
 import android.os.Message;
 import android.util.Log;
 import android.view.ViewGroup.LayoutParams;
@@ -13,35 +14,44 @@ import android.widget.ProgressBar;
 
 public class IndicatorPlugin {
 	private static Activity	m_activity = null;
-	
 	private static MyProgressDialog progressDialog = null;
-	private static final Handler dialogHandlerShow = new Handler(){      
-        public void handleMessage(Message msg){ 
-           if(null == progressDialog)
-           {
-        	   progressDialog = MyProgressDialog.show(m_activity, "", "", true, false);
-           }
-        }    
-     }; 
+	private static Handler dialogHandlerShow = null;
+	private static Handler dialogHandlerClose = null;
+	HandlerThread handlerThread = new HandlerThread("HandlerName");
   	
-  	private static final Handler dialogHandlerClose = new Handler(){      
-        public void handleMessage(Message msg){ 
-           if(null != progressDialog)
-           {
-        	   progressDialog.dismiss();
-        	   progressDialog = null;
-           }
-           else
-        	   Log.d("TT", "null != progressDialog");
-        }    
-     };
-     
-     public void Init(Activity arg)
-     {
-    	 m_activity = arg;
-     }
+	public void Init(Activity arg)
+    {
+		m_activity = arg;
+		
+		{
+			// Handler Class 참조 : http://aroundck.tistory.com/1022
+			handlerThread.start();
 	
-	public static void ShowProgressIndicator(int bShow)
+			dialogHandlerShow = new Handler( handlerThread.getLooper() ){      
+		        public void handleMessage(Message msg){ 
+		           if(null == progressDialog)
+		           {
+		        	   progressDialog = MyProgressDialog.show(m_activity, "", "", true, false);
+		           }
+		        }    
+		     }; 
+		     
+		     dialogHandlerClose = new Handler( handlerThread.getLooper() ){      
+		         public void handleMessage(Message msg){ 
+		            if(null != progressDialog)
+		            {
+		         	   progressDialog.dismiss();
+		         	   progressDialog = null;
+		            }
+		            else
+		         	   Log.d("TT", "null != progressDialog");
+		         }    
+		      };
+		}
+    }
+	
+	
+	public void ShowProgressIndicator(int bShow)
  	{	    
  	   if(1 == bShow)
  	   {
