@@ -20,17 +20,16 @@ public class WebActivity extends Activity {
 			int webviewID = getResources().getIdentifier("webView", "id", getPackageName());
 			webView = (WebView)findViewById(webviewID);
 		}
-
-		webView.setBackgroundColor(0);
-		webView.setLayerType(webView.LAYER_TYPE_SOFTWARE, null);
 		
 		webView.getSettings().setJavaScriptEnabled(true);
 
-		webView.loadUrl("http://www.javacodegeeks.com");
-
-		//String customHtml = "<html><body><h2>Greetings from JavaCodeGeeks</h2></body></html>";
-		//webView.loadData(customHtml, "text/html", "UTF-8");
-
+		if(null != getIntent().getStringExtra("url"))
+			webView.loadUrl( getIntent().getStringExtra("url") );
+		else if(null != getIntent().getStringExtra("data"))
+		{
+			String customHtml = getIntent().getStringExtra("data");
+			webView.loadData(customHtml, "text/html", "UTF-8");
+		}
 	}
 
 }

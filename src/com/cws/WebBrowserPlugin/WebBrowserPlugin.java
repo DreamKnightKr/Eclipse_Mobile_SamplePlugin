@@ -3,6 +3,7 @@ package com.cws.WebBrowserPlugin;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
 
 // [Reference]
@@ -16,22 +17,26 @@ public class WebBrowserPlugin {
 		m_activity = arg;
     }
 	
-	public static void OpenWebBrowser(String strURL)
+	public static void OpenEmbeddedWebBrowser(String url)
 	{
-		Uri uri = Uri.parse(strURL);
-		Intent it  = new Intent(Intent.ACTION_VIEW,uri);
-		m_activity.startActivity(it);
+		Intent intent = new Intent(m_activity, WebActivity.class);
 		
-		Log.d("CWS", "OpenWebBrowser" + strURL);
+		Bundle b = new Bundle();
+		b.putString("url", url); //Your id
+		intent.putExtras(b); //Put your id to your next Intent
+		
+		m_activity.startActivity(intent);
 	}
 	
-	public static void OpenEmbeddedWebBrowser(String strURL)
+	public static void OpenEmbeddedWebBrowserData(String data)
 	{
-		Uri uri = Uri.parse(strURL);
 		Intent intent = new Intent(m_activity, WebActivity.class);
-		m_activity.startActivity(intent);
 		
-		Log.d("CWS", "OpenEmbeddedWebBrowser" + strURL);
+		Bundle b = new Bundle();
+		b.putString("data", data); //Your id
+		intent.putExtras(b); //Put your id to your next Intent
+		
+		m_activity.startActivity(intent);
 	}
 }
 
