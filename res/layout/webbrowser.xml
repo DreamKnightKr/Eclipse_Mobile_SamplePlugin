@@ -3,5 +3,5 @@
     android:id="@+id/webView"
     android:layout_width="300dp"
     android:layout_height="200dp"
-    android:layout_gravity="center_horizontal" />
+    android:layout_gravity="center|clip_vertical|clip_horizontal" />
 

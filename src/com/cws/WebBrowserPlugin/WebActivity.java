@@ -21,6 +21,9 @@ public class WebActivity extends Activity {
 			webView = (WebView)findViewById(webviewID);
 		}
 
+		webView.setBackgroundColor(0);
+		webView.setLayerType(webView.LAYER_TYPE_SOFTWARE, null);
+		
 		webView.getSettings().setJavaScriptEnabled(true);
 
 		webView.loadUrl("http://www.javacodegeeks.com");
