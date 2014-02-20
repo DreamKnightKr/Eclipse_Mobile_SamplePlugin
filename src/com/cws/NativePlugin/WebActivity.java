@@ -1,4 +1,4 @@
-package com.cws.WebBrowserPlugin;
+package com.cws.NativePlugin;
 
 import android.app.Activity;
 import android.os.Bundle;
